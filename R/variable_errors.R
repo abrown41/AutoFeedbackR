@@ -6,9 +6,24 @@
 VARIABLE_MESSAGES <- list(
   # Error messages
   errors = list(
-    not_exist = "Variable '{var_name}' does not exist in the current environment.",
-    wrong_shape = "Variable '{var_name}' has incorrect shape. Expected: {expected}, Actual: {actual}",
-    wrong_value = "Variable '{var_name}' has incorrect value. Expected: {expected}, Actual: {actual}"
+    not_exist = "The variable '{var_name}' does not exist.
+    Ensure you have named the variable properly,
+    bearing in mind that capital letters matter.
+    ",
+    wrong_shape = "The variable '{var_name}' is the wrong size.
+    Try using length({var_name}) or dim({var_name}) to determine the size or shape of the array, or
+    print({var_name}) to check the values look as you expect them to.
+    ",
+    wrong_value = "The variable '{var_name}' has the wrong value(s)\n
+        We expected:
+        {expected}
+        but instead we got:
+        {actual}
+
+        Try using print({var_name}) to check the values look as you expect them
+        to and ensure the expression used to calculate the variable
+        is correct.
+        "
   ),
   
   # Success message
