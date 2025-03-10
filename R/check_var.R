@@ -10,7 +10,8 @@
 check_var <- function(var_name, expected_value) {
   # Step 1: Check if variable exists
   if (!exists(var_name, envir = .GlobalEnv)) {
-    warning(paste0("Variable '", var_name, "' does not exist in the current environment."))
+    msg <- format_variable_message("not_exist", var_name)
+    display_colored_message(msg, "error")
     return(FALSE)
   }
   
@@ -22,72 +23,38 @@ check_var <- function(var_name, expected_value) {
   actual_shape <- get_shape(actual_value)
   
   if (!identical(expected_shape, actual_shape)) {
-    warning(paste0("Variable '", var_name, "' has incorrect shape. ",
-                  "Expected: ", shape_to_string(expected_shape), 
-                  ", Actual: ", shape_to_string(actual_shape)))
+    msg <- format_variable_message(
+      "wrong_shape", 
+      var_name, 
+      shape_to_string(expected_shape),
+      shape_to_string(actual_shape)
+    )
+    display_colored_message(msg, "error")
     return(FALSE)
   }
   
   # Step 3: Check value
   if (!is_equal(actual_value, expected_value)) {
-    warning(paste0("Variable '", var_name, "' has incorrect value. ",
-                  "Expected: ", value_to_string(expected_value), 
-                  ", Actual: ", value_to_string(actual_value)))
+    msg <- format_variable_message(
+      "wrong_value", 
+      var_name, 
+      value_to_string(expected_value),
+      value_to_string(actual_value)
+    )
+    display_colored_message(msg, "error")
     return(FALSE)
   }
   
   # Step 4: All checks passed
-  message(paste0("Variable '", var_name, "' is correctly defined."))
-  return(TRUE)
+  msg <- format_variable_message("success", var_name)
+  display_colored_message(msg, "success")
+  invisible(TRUE)
 }
 
-# Helper function to get shape/dimensions of an object
-get_shape <- function(x) {
-  if (is.null(dim(x))) {
-    # For vectors, matrices with one dimension, etc.
-    if (length(x) == 1) {
-      return("scalar")
-    } else {
-      return(list(type = class(x)[1], length = length(x)))
-    }
-  } else {
-    # For arrays, matrices, data frames, etc.
-    return(list(type = class(x)[1], dim = dim(x)))
-  }
-}
+# Helper functions remain the same as before
 
-# Convert shape to readable string
-shape_to_string <- function(shape) {
-  if (identical(shape, "scalar")) {
-    return("scalar")
-  } else if (is.list(shape) && "length" %in% names(shape)) {
-    return(paste0(shape$type, " of length ", shape$length))
-  } else {
-    dims <- paste(shape$dim, collapse = "×")
-    return(paste0(shape$type, " with dimensions ", dims))
-  }
-}
-
-# Check if two values are equal
-is_equal <- function(x, y) {
-  # Handle different types of equality checks
-  if (is.numeric(x) && is.numeric(y)) {
-    # For numerical values, use all.equal with tolerance
-    return(isTRUE(all.equal(x, y, tolerance = 1e-8)))
-  } else {
-    # For other types, use identical
-    return(identical(x, y))
-  }
-}
-
-# Convert value to readable string
-value_to_string <- function(x) {
-  if (length(x) == 1) {
-    return(as.character(x))
-  } else if (length(x) <= 5) {
-    return(paste0("[", paste(x, collapse = ", "), "]"))
-  } else {
-    sample <- x[1:5]
-    return(paste0("[", paste(sample, collapse = ", "), ", ...]"))
-  }
-}
+# Moved to utils.R:
+# get_shape <- function(x) { ... }
+# shape_to_string <- function(shape) { ... }
+# is_equal <- function(x, y) { ... }
+# value_to_string <- function(x) { ... }

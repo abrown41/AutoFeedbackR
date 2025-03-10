@@ -1,5 +1,5 @@
-Package: studentfeedback
-Title: Automated Feedback for Student Code
+Package: AutoFeedbackR
+Title: Automated Feedback for Student R Code
 Version: 0.1.0
 Authors@R: person("Andrew", "Brown", email = "andrew.brown@qub.ac.uk", role = c("aut", "cre"))
 Description: Provides tools for checking student code submissions and providing automated feedback.
