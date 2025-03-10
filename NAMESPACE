@@ -1,5 +1,6 @@
 # Export public functions
 export(check_var)
+export(check_func)
 
 # Import any packages you depend on (if needed)
 # importFrom(stats, all.equal)
