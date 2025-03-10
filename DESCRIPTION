@@ -1,0 +1,11 @@
+Package: studentfeedback
+Title: Automated Feedback for Student Code
+Version: 0.1.0
+Authors@R: person("Andrew", "Brown", email = "andrew.brown@qub.ac.uk", role = c("aut", "cre"))
+Description: Provides tools for checking student code submissions and providing automated feedback.
+    The package allows instructors to define expected values and check if student-created variables
+    match those expectations in terms of existence, shape, and value.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
